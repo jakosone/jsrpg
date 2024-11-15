@@ -1,6 +1,19 @@
 <html>
   <body>
+    <p>
+      <button id="prompt">Enter</button>
+    </p>
+    <p id="output"></p>
     <script>
+
+      document.getElementById("prompt").onclick = function() {getOutput()};
+
+
+      function getOutput() {
+        document.getElementById("output").innerHTML = "Text!";
+
+
+      
       document.write("hello");
       i = 0;
       while (i < 15) {
@@ -8,6 +21,6 @@
         i++;
       }
     </script>
-    <button>Enter</button>
+
   </body>
 </html>
