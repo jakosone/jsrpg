@@ -1,27 +1,37 @@
 <html>
   <body>
     <p>
-      <button id="prompt">Enter</button>
+      <button id="prompt">Roll</button>
     </p>
-    
+     
     <p id="output">Output</p>
+    <p id="status">Status</p>
+    <p id="HPtext">HP</p>
+
+   
     
-    <script>
+    <script> 
+      hitpoints = "100";
 
       document.getElementById("prompt").onclick = function() {getOutput()};
 
 
       function getOutput() {
-        document.getElementById("output").innerHTML = "Text!";
+        number = Math.floor(Math.random() * 10);
+        document.getElementById("output").innerHTML = number
+        statusText = "Normal";
+        if (number == 0) {
+            statusText = "Critical!";
+            } else if (number == 1) {
+             statusText = "Miss!";
+             hitpoints -= 10;
+            }
+
+        document.getElementById("status").innerHTML = statusText
+        document.getElementById("HPtext").innerHTML = hitpoints
       }
 
-      
-      //document.write("hello");
-      //i = 0;
-      //while (i < 15) {
-       //document.write("This is row " + i);
-       // i++;
-      //}
+     
     </script>
 
   </body>
