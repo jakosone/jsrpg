@@ -1,8 +1,16 @@
 <html>
+
+<style>
+
+body {
+    background-color: linen;
+    }
+  
+</style>
+
   <body>
     <p>
-      <table>
-        <tr>
+      <table><tr>
          <td>   <button id="prompt">Roll</button></td>
          <td>   <button id="potion">Potion</button></td>
          </tr>
@@ -22,13 +30,12 @@
       hitpoints = 100;
       potions = 3;
 
-      // button actions
       document.getElementById("prompt").onclick = function() {getOutput()};
       document.getElementById("potion").onclick = function() {drinkPotion()};
 
       
       function getOutput() {
-        // rolling the die D10
+        // rolling the die
         number = Math.floor(Math.random() * 10);
         document.getElementById("output").innerHTML = number
         statusText = "Normal";
@@ -39,9 +46,7 @@
              hitpoints -= 10;
             }
 
-        // update status text
         document.getElementById("status").innerHTML = statusText
-        // update health
         document.getElementById("HPtext").innerHTML = "HP: " + hitpoints
       }
 
@@ -51,7 +56,6 @@
            potions -= 1;
            hitpoints += 25;
            }
-        // update health
         document.getElementById("HPtext").innerHTML = "HP: " + hitpoints
 
       }
