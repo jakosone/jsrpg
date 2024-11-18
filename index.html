@@ -11,7 +11,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
-	<title>untitled</title>
+	<title>JS-RPG</title>
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 	<meta name="generator" content="Geany 2.0" />
 </head>
@@ -20,7 +20,7 @@
     /* CSS stylings */
 
     body {
-        background-color: rgb(200,180,200);
+        background-color: rgb(200,190,200);
     }
         
     #potionBtn {
@@ -37,6 +37,11 @@
     
     #castBtn {
         color: purple;
+    }
+
+    #graphics {
+        border:1px solid red;
+        background-color:black
     }
   
 </style>
@@ -57,8 +62,9 @@
     <p id="status">Status</p>
     <p id="HPtext">HP</p>
     <p id="environment">What you see</p>
-    
 
+
+    <canvas id="graphics" width="250" height="150"></canvas>
    
     
     <script> 
@@ -128,9 +134,11 @@
             
             if (number < 25) {
                 text = "You are walking in a forest."
+                drawEnvironment("forest");
             } else if (number > 80 && number < 98) {
                 text = "You encountered a monster!";
                 monsterHP = 10;
+                drawEnvironment("monster");
             } else if (number == 99) {
                 text = "You found a health upgrade!";
                 hitpoints = 150;
@@ -138,6 +146,37 @@
             document.getElementById("environment").innerHTML = "You rolled a : " + number + ". " + text;
 
               
+          }
+
+
+         function drawEnvironment(location) {
+
+          const canvas = document.getElementById("graphics");
+            const ctx = canvas.getContext("2d");
+
+           ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+           if (location == "forest") {
+                 
+
+                  ctx.beginPath();
+                   ctx.moveTo(100,20);
+                   ctx.lineTo(150,100);
+                   ctx.lineTo(20,100);
+                    ctx.lineTo(100,20);
+                    ctx.strokeStyle = "green";
+                   ctx.stroke();
+
+               } else if (location == "monster") {
+                   ctx.beginPath();
+                   ctx.moveTo(100,20);
+                   ctx.lineTo(100,150);
+                   ctx.lineTo(20,100);
+                    ctx.lineTo(100,20);
+                    ctx.strokeStyle = "red";
+                   ctx.stroke();
+                }
+
           }
 
      
