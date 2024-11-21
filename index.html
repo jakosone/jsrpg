@@ -49,7 +49,7 @@
 <body>
     <p
       <table><tr>
-         <td>   <button id="rollBtn">Roll</button></td>
+         <td>   <button id="rollBtn">Roll D100</button></td>
          <td>   <button id="castBtn">Cast Spell</button></td>
          <td>   <button id="potionBtn">Potion</button></td>
          <td>   <button id="manaPotionBtn">Mana Potion</button></td>
@@ -57,11 +57,16 @@
    
       </table>
     </p>
+    
+    <table>
+        <tr>
+            <td id="XP">experience</td>
+        </tr>
+    </table>
      
-    <p id="output">Output</p>
+    <p id="output">Combat Roll:</p>
     <p id="status">Status</p>
     <p id="HPtext">HP</p>
-    <p id="environment">What you see</p>
 
 
     <canvas id="graphics" width="250" height="150"></canvas>
@@ -74,9 +79,12 @@
           hitpoints = 100;
           potions = 3;
           monsterHP = -1;
+          XP = 0;
 
           document.getElementById("rollBtn").onclick = function() {getOutput()};
           document.getElementById("potionBtn").onclick = function() {drinkPotion()};
+          
+          document.getElementById("XP").innerHTML = "<b>Experience:</b> " + XP;
 
           
           function getOutput() {
@@ -87,28 +95,38 @@
             // update environment only if not in combat
             if (monsterHP == -1) {
                 getEnvironment();
+                XP++;
+                // update status text
+                document.querySelector('#status').innerHTML = 'Walking around';
             } else {
                 // combat
                 // rolling the D10
                 number = Math.floor(Math.random() * 10);
-                document.getElementById("output").innerHTML = number
-                statusText = "Normal - you both took damage.";
+                document.getElementById("output").innerHTML = "Combat roll: " + number;
+                statusText = "<b>Combat: </b>Normal - you both took damage.";
                 if (number == 0) {
-                    statusText = "Critical hit!";
+                    statusText = "<b>Combat: </b>Critical hit!";
                     monsterHP -= 10;
                     } else if (number == 1) {
-                        statusText = "Miss! The monster got you!";
+                        statusText = "<b>Combat: </b>Miss! The monster got you!";
                         hitpoints -= 20;
                     } else {
                         hitpoints -= 10;
                         monsterHP -= 5;
                 if (monsterHP <= 0) {
-                    statusText = "You beat the monster."
+                    statusText = "<b>Combat: </b>You beat the monster."
                     monsterHP = -1;
+                    XP += 10;
+                    // Change back to D100
+                    document.querySelector('#rollBtn').innerHTML = 'Roll D100';
                     }
                 }
                 document.getElementById("status").innerHTML = statusText;
+                if (hitpoints > 0) {
+                    XP += 5;
+                }
             }
+            document.getElementById("XP").innerHTML = "<b>Experience:</b> " + XP;
         }
 
           function drinkPotion() {
@@ -139,11 +157,12 @@
                 text = "You encountered a monster!";
                 monsterHP = 10;
                 drawEnvironment("monster");
+                document.querySelector('#rollBtn').innerHTML = 'Roll D10';
             } else if (number == 99) {
                 text = "You found a health upgrade!";
                 hitpoints = 150;
             }
-            document.getElementById("environment").innerHTML = "You rolled a : " + number + ". " + text;
+            document.getElementById("output").innerHTML = "You rolled a : " + number + ". " + text;
 
               
           }
@@ -159,22 +178,22 @@
            if (location == "forest") {
                  
 
-                  ctx.beginPath();
-                   ctx.moveTo(100,20);
-                   ctx.lineTo(150,100);
-                   ctx.lineTo(20,100);
+                    ctx.beginPath();
+                    ctx.moveTo(100,20);
+                    ctx.lineTo(150,100);
+                    ctx.lineTo(20,100);
                     ctx.lineTo(100,20);
                     ctx.strokeStyle = "green";
-                   ctx.stroke();
+                    ctx.stroke();
 
                } else if (location == "monster") {
-                   ctx.beginPath();
-                   ctx.moveTo(100,20);
-                   ctx.lineTo(100,150);
-                   ctx.lineTo(20,100);
-                    ctx.lineTo(100,20);
+                    ctx.beginPath();
+                    ctx.moveTo(40,20);
+                    ctx.lineTo(200,20);
+                    ctx.lineTo(120,100);
+                    ctx.lineTo(40,20);
                     ctx.strokeStyle = "red";
-                   ctx.stroke();
+                    ctx.stroke();
                 }
 
           }
